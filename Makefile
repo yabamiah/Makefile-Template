@@ -16,6 +16,8 @@ MUL = bin/mul
 
 # FLAG
 CFLAGS = -Llib -lteste -Iinclude
+
+.PHONY: all
 all: $(ADD) $(MUL)
 	@echo $(SOURCES)
 	@echo $(LIB_SOURCES)
@@ -35,13 +37,16 @@ $(ADD): $(ADD_MAIN) $(INCLUDES) $(LIB)
 $(MUL): $(MUL_MAIN) $(INCLUDES) $(LIB)
 	gcc -o $@ $< $(CFLAGS)
 
+.PHONY: clean
 clean:
 	@rm -f lib/* bin/*
 	@find . -name "*.o" -exec rm -f {} \;
 
+.PHONY: install
 install: $(ADD) $(MUL)
 	sudo cp $? /usr/local/bin
 
+.PHONY: uninstall
 uninstall:
 	@sudo rm -f /usr/local/bin/add
 	@sudo rm -f /usr/local/bin/mul
